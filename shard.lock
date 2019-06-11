@@ -2,7 +2,7 @@ version: 1.0
 shards:
   crymagick:
     github: imdrasil/crymagick
-    version: 0.1.1
+    commit: b6450e952a221cf2fec63f99cff6ff2c2970c6b0
 
   stumpy_core:
     github: stumpycr/stumpy_core

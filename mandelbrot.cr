@@ -22,6 +22,26 @@ def escapes?(c, threshold)
   false
 end
 
+def iterations(coords, lower_bound, threshold)
+  lower_bound.to_i.upto(threshold) do |i|
+    if escapes?(coords, i)
+      return i
+    end
+  end
+  return -1
+end
+
+def iterations_flat(coords, threshold)
+  z : Complex = Complex.new(0, 0)
+
+  threshold.times do |i|
+    z = z*z + coords
+    return i if z.abs > 2.0
+  end
+
+  return -1
+end
+
 def coord_map(x1, y1, x2, y2, x_size, y_size, x, y)
   x_dim = x2 - x1
   y_dim = y2 - y1
@@ -32,9 +52,12 @@ def coord_map(x1, y1, x2, y2, x_size, y_size, x, y)
   return Complex.new(x_coord, y_coord)
 end
 
-IMG_WIDTH = 300
-IMG_HEIGHT = 200
-THRESHOLD = 25
+IMG_WIDTH = 600
+IMG_HEIGHT = 400
+THRESHOLD = 35
+
+BEGIN = ARGV[0].to_i
+END = ARGV[1].to_i
 
 def frame_iter(x1 : Float64, y1 : Float64, x2 : Float64, y2 : Float64,
                center_x : Float64, center_y : Float64,
@@ -56,28 +79,41 @@ def generate_image(frame : Int32)
 
   IMG_HEIGHT.times do |y|
     IMG_WIDTH.times do |x|
-      threshold = THRESHOLD + frame * 5 / 2
+      threshold = (THRESHOLD + 5 * (1.05 ** frame)).floor.to_i
       coords = coord_map(*bounds, IMG_WIDTH, IMG_HEIGHT, x, y)
-      threshold.downto(frame * 2.5 / 2) do |i|
-        if escapes?(coords, i)
-          image[x, y] = StumpyPNG::RGBA.from_rgb_n(255, 255, 255, 8)
-        else
-          red = 255 - (255.0 / threshold) * i
-          green = (255.0 / threshold) * i
-          blue = (255.0 / threshold) * i / 2.0
-          image[x, y] = StumpyPNG::RGBA.from_rgb_n(red, green, blue, 8)
-          break
-        end
+      if (i = iterations_flat(coords, threshold)) == -1
+        image[x, y] = StumpyPNG::RGBA.from_rgb_n(0, 0, 0, 8)
+      else
+        red = (255.0 / threshold) * i / 2.0
+        green = (255.0 / threshold) * i
+        blue = 255 - (255.0 / threshold) * i
+        image[x, y] = StumpyPNG::RGBA.from_rgb_n(red, green, blue, 8)
       end
     end
   end
-
-  StumpyPNG.write(image, "output_#{frame}.png")
+  return image
 end
 
-(ARGV[0].to_i..ARGV[1].to_i).each do |i|
+filenames = [] of String
+(BEGIN..END).each do |i|
   puts "Starting generation of frame #{i}..."
-  generate_image(i)
+  image = generate_image(i)
+  filename = "output_#{i}.png"
+  StumpyPNG.write(image, filename)
+  filenames << filename
   puts "Generated frame #{i}"
 end
+
+puts "Splicing..."
+CryMagick::Tool::Convert.build do |c|
+  c.loop 0
+  c.delay 10
+  filenames.each do |f|
+    c << f
+  end
+  c.resize "300x200"
+  c << "output_#{ARGV[2]}.gif"
+end
+
+puts "Job #{ARGV[2]} complete"
 # vim: ts=2:sw=2:et:smarttab:

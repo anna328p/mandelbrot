@@ -13,6 +13,7 @@ dependencies:
     version: "~> 4.4.1"
   crymagick:
     github: imdrasil/crymagick
+    branch: master
 
 # development_dependencies:
 #   webmock:
