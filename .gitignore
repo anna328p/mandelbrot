@@ -2,3 +2,5 @@ mandelbrot
 output_*
 lib
 vendor
+frames/*.png
+
