@@ -1,15 +1,49 @@
-require "complex"
-require "stumpy_png"
-require "crymagick"
+#include <iostream>
+#include <tuple>
+#include <vector>
+#include <complex>
+#include <cstdint>
+#include <utility>
 
-IMG_WIDTH = 3840
-IMG_HEIGHT = 2160
-PIXELS = IMG_HEIGHT * IMG_WIDTH
+#include <Magick++.h>
 
-THRESHOLD = 500
-#THRESHOLD_INCREASE = 1.025
-THRESHOLD_INCREASE = 1
+typedef std::complex<double,double> Point;
+typedef std::pair<uint32_t,uint32_t> Coord;
 
+const uint32_t img_width = 640;
+const uint32_t img_height = 480;
+
+const uint32_t threshold = 500;
+const double threshold_increase = 1.025;
+
+
+int32_t iterations(Point coords, uint32_t threshold) {
+  auto z = Point(0, 0);
+
+  for (int i = 0; i < threshold; i++) {
+    z = z*z + coords;
+    if (std::abs(z) > 2.0) return i;
+  }
+  return -1;
+}
+
+Point coord_map(
+    double x1, double y1, double x2, double y2,
+    uint32_t x_size, uint32_t y_size,
+    Coord location
+    ) {
+  double x_dim = x2 - x1;
+  double y_dim = y2 - y1;
+
+  double x_coord = x1 + x_dim * ((double) x) / x_size;
+  double y_coord = y1 + y_dim * ((double) y) / y_size;
+
+  return Point(x_coord, y_coord);
+}
+
+std::pair<Point,Point> frame_bounds()
+
+/*
 BEGIN = ARGV[0].to_i
 END = ARGV[1].to_i
 
@@ -17,27 +51,6 @@ ANGLE = Random.rand(360)
 R = (1 - Math.cos(ANGLE)) / 2
 X = R * Math.cos(ANGLE) + 0.25
 Y = R * Math.sin(ANGLE)
-
-def iterations(coords, threshold)
-  z : Complex = Complex.new(0, 0)
-
-  threshold.times do |i|
-    z = z*z + coords
-    return i if z.abs > 2.0
-  end
-
-  return -1
-end
-
-def coord_map(x1, y1, x2, y2, x_size, y_size, x, y)
-  x_dim = x2 - x1
-  y_dim = y2 - y1
-
-  x_coord = x1 + (x.to_f / x_size) * x_dim
-  y_coord = y1 + (y.to_f / y_size) * y_dim
-
-  return Complex.new(x_coord, y_coord)
-end
 
 def frame_bounds(x1 : Float64, y1 : Float64, x2 : Float64, y2 : Float64,
                center_x : Float64, center_y : Float64,
@@ -102,4 +115,5 @@ CryMagick::Tool::Convert.build do |c|
 end
 
 puts "Job #{ARGV[2]} complete"
-# vim: ts=2:sw=2:et:smarttab:
+*/
+// vim: ts=4:sw=4:noet:
