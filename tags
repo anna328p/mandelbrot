@@ -1,0 +1,5 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+coord_map	/home/dmitry/work/mandelbrot/mandelbrot.rb	/^def coord_map(x1, y1, x2, y2, x_size, y_size, x, y)$/;"	f	language:Ruby
+escapes?	/home/dmitry/work/mandelbrot/mandelbrot.rb	/^def escapes?(c, threshold)$/;"	f	language:Ruby
+qmap	/home/dmitry/work/mandelbrot/mandelbrot.rb	/^def qmap(z, c)$/;"	f	language:Ruby
+recurse_qmap	/home/dmitry/work/mandelbrot/mandelbrot.rb	/^def recurse_qmap(z, c, count)$/;"	f	language:Ruby
