@@ -2,13 +2,13 @@ require "complex"
 require "stumpy_png"
 require "crymagick"
 
-IMG_WIDTH = 3840
-IMG_HEIGHT = 2160
+IMG_WIDTH = 640
+IMG_HEIGHT = 480
 PIXELS = IMG_HEIGHT * IMG_WIDTH
 
-THRESHOLD = 500
-#THRESHOLD_INCREASE = 1.025
-THRESHOLD_INCREASE = 1
+THRESHOLD = 25
+THRESHOLD_INCREASE = 1.05
+#THRESHOLD_INCREASE = 1
 
 BEGIN = ARGV[0].to_i
 END = ARGV[1].to_i
@@ -56,7 +56,7 @@ def frame_bounds(x1 : Float64, y1 : Float64, x2 : Float64, y2 : Float64,
 end
 
 def generate_image(frame : Int32)
-  bounds = frame_bounds(-2, 1.1, 1, -1.1, X, Y, frame, 0.05)
+  bounds = frame_bounds(-2, 1.1, 1, -1.1, X, Y, frame, 0.1)
   image = StumpyPNG::Canvas.new(IMG_WIDTH, IMG_HEIGHT)
 
   threshold = (THRESHOLD * THRESHOLD_INCREASE ** frame).ceil.to_i
@@ -93,7 +93,7 @@ end
 puts "Splicing..."
 CryMagick::Tool::Convert.build do |c|
   c.loop 0
-  c.delay 5
+  c.delay 10
   filenames.each do |f|
     c << f
   end

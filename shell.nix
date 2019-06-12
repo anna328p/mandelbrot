@@ -1,5 +1,5 @@
 with (import <nixpkgs> {});
 stdenv.mkDerivation {
   name = "mandelbrot";
-  buildInputs = [ pkgs.crystal gitAndTools.hub cmake ];
+  buildInputs = [ pkgs.crystal pkgs.shards gitAndTools.hub cmake ];
 }

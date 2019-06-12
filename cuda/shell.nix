@@ -1,5 +1,5 @@
 with (import <nixpkgs> {});
-stdenv.mkDerivation {
+gcc9Stdenv.mkDerivation {
   name = "mandelbrot-cuda";
   buildInputs = [
     cudatoolkit

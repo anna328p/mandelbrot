@@ -1,2 +1,5 @@
-cpu:
-	g++ -O2 -g -o cpu cpu.cpp `Magick++-config --cppflags --cxxflags --ldflags --libs`
+CXX = g++
+CPU_CXXFLAGS = -O2 -g -std=gnu++17 -lstdc++fs `Magick++-config --cppflags --cxxflags --ldflags --libs`
+
+cpu: cpu.cpp
+	$(CXX) $(CPU_CXXFLAGS) -o cpu cpu.cpp
