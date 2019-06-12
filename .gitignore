@@ -4,3 +4,7 @@ lib
 vendor
 frames/*.png
 
+cuda/cpu
+cuda/a.out
+cuda/tags
+cuda/test_kernel

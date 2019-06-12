@@ -12,10 +12,14 @@
 
 #include <Magick++.h>
 
+#include <omp.h>
+
 using namespace Magick;
 namespace fs = std::filesystem;
 
-using Point = std::complex<double>;
+using Real = long double;
+
+using Point = std::complex<Real>;
 using Bounds = std::pair<Point, Point>;
 using Coord = std::pair<uint32_t, uint32_t>;
 
@@ -23,7 +27,7 @@ const uint32_t img_width = 640;
 const uint32_t img_height = 480;
 
 const uint32_t threshold = 25;
-const double threshold_increase = 1.025;
+const Real threshold_increase = 1.025;
 
 int32_t iterations(Point coords, uint32_t threshold) {
 	auto z = Point(0, 0);
@@ -36,31 +40,31 @@ int32_t iterations(Point coords, uint32_t threshold) {
 }
 
 Point coord_map(Bounds bounds, Coord size, Coord location) {
-	double x1 = bounds.first.real();
-	double y1 = bounds.first.imag();
-	double x2 = bounds.second.real();
-	double y2 = bounds.second.imag();
+	Real x1 = bounds.first.real();
+	Real y1 = bounds.first.imag();
+	Real x2 = bounds.second.real();
+	Real y2 = bounds.second.imag();
 
-	double x_dim = x2 - x1;
-	double y_dim = y2 - y1;
+	Real x_dim = x2 - x1;
+	Real y_dim = y2 - y1;
 
-	double x_coord = x1 + x_dim * (((double) location.first) / size.first);
-	double y_coord = y1 + y_dim * (((double) location.second) / size.second);
+	Real x_coord = x1 + x_dim * (((double) location.first) / size.first);
+	Real y_coord = y1 + y_dim * (((double) location.second) / size.second);
 
 	return Point(x_coord, y_coord);
 }
 
 Bounds frame_bounds(
 		Bounds bounds, Point center,
-		int frame, double reduction
+		int frame, Real reduction
 		) {
-	double width  = (bounds.second.real() - bounds.first.real()) * pow((1 - reduction), frame);
-	double height = (bounds.second.imag() - bounds.first.imag()) * pow((1 - reduction), frame);
+	Real width  = (bounds.second.real() - bounds.first.real()) * pow((1 - reduction), frame);
+	Real height = (bounds.second.imag() - bounds.first.imag()) * pow((1 - reduction), frame);
 
-	double x1 = center.real() - (width / 2);
-	double x2 = center.real() + (width / 2);
-	double y1 = center.imag() - (height / 2);
-	double y2 = center.imag() + (height / 2);
+	Real x1 = center.real() - (width / 2);
+	Real x2 = center.real() + (width / 2);
+	Real y1 = center.imag() - (height / 2);
+	Real y2 = center.imag() + (height / 2);
 	return Bounds(Point(x1, y1), Point(x2, y2));
 }
 
@@ -74,7 +78,7 @@ void generate_image(Image &image, Bounds bounds, uint32_t threshold) {
 	auto pixels = pixel_cache.get(0, 0, width, height);
 
 	Color black(0, 0, 0, 0);
-	auto color_scale = ((double) QuantumRange / threshold);
+	auto color_scale = ((Real) QuantumRange / threshold);
 
 	for (auto y = 0; y < height; y++) {
 		for (auto x = 0; x < width; x++) {
@@ -104,18 +108,20 @@ int main(int argc, char **argv) {
 	// Generate a random angle
 	std::random_device rd;
 	std::uniform_int_distribution<int> dist(0, 359);
-	auto angle = dist(rd);
+	auto angle_deg = dist(rd);
+	Real angle = (Real) (M_PI / 180) * angle_deg;
 
 	// Find coordinates for that angle
-	auto r = (std::cos(angle)) / 2.0;
-	auto x = r * std::cos(angle) + 0.25;
-	auto y = r * std::sin(angle);
+	Real r = (cos(angle)) / 2.0;
+	Real x = r * cos(angle) + 0.25;
+	Real y = r * sin(angle);
 	std::cout << r << ' ' << x << ' ' << y << ' ' << angle << std::endl;
 
 	std::vector<std::string> filenames;
 
 	if (!fs::is_directory("frames")) fs::create_directories("frames");
 
+#pragma omp parallel for schedule(dynamic, 2)
 	for (auto i = first_frame; i <= last_frame; i++) {
 		printf("Starting generation of frame %d...\n", i);
 
@@ -125,7 +131,7 @@ int main(int argc, char **argv) {
 				Point(x, y), i, 0.1);
 
 				bounds.second.real(), bounds.second.imag(),
-		printf("(%f,%f), (%f,%f) @ (%f,%f)\n",
+		printf("(%llf,%llf), (%llf,%llf) @ (%llf,%llf)\n",
 				bounds.first.real(), bounds.first.imag(),
 				bounds.second.real(), bounds.second.imag(),
 				bounds.first.real() + (bounds.second.real() - bounds.first.real()) / 2,
