@@ -1,9 +1,0 @@
-!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
-Coord	/home/dmitry/work/mandelbrot/cuda/cpu.cpp	/^typedef std::pair<uint32_t,uint32_t> Coord;$/;"	t	language:C++	file:
-coord_map	/home/dmitry/work/mandelbrot/cuda/cpu.cpp	/^Point coord_map($/;"	f	language:C++
-img_height	/home/dmitry/work/mandelbrot/cuda/cpu.cpp	/^const uint32_t img_height = 480;$/;"	v	language:C++
-img_width	/home/dmitry/work/mandelbrot/cuda/cpu.cpp	/^const uint32_t img_width = 640;$/;"	v	language:C++
-iterations	/home/dmitry/work/mandelbrot/cuda/cpu.cpp	/^int32_t iterations(Point coords, uint32_t threshold) {$/;"	f	language:C++
-Point	/home/dmitry/work/mandelbrot/cuda/cpu.cpp	/^typedef std::complex<double,double> Point;$/;"	t	language:C++	file:
-threshold	/home/dmitry/work/mandelbrot/cuda/cpu.cpp	/^const uint32_t threshold = 500;$/;"	v	language:C++
-threshold_increase	/home/dmitry/work/mandelbrot/cuda/cpu.cpp	/^const double threshold_increase = 1.025;$/;"	v	language:C++
