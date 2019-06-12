@@ -1,0 +1,6 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+CXX	/home/dmitry/work/mandelbrot/cpp/gui/Makefile	/^CXX = g++$/;"	m	language:Make
+CXXFLAGS	/home/dmitry/work/mandelbrot/cpp/gui/Makefile	/^CXXFLAGS = -O2 -g `pkg-config --cflags --libs gtkmm-3.0`$/;"	m	language:Make
+main	/home/dmitry/work/mandelbrot/cpp/gui/gui.cpp	/^int main(int argc, char **argv) {$/;"	f	language:C++
+on_button_clicked	/home/dmitry/work/mandelbrot/cpp/gui/gui.cpp	/^static void on_button_clicked() {$/;"	f	language:C++	file:
+window0	/home/dmitry/work/mandelbrot/cpp/gui/gui.cpp	/^Gtk::Window *window0 = nullptr;$/;"	v	language:C++

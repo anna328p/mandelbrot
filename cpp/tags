@@ -1,21 +1,24 @@
 !_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
-coord_map	/home/dmitry/work/mandelbrot/cuda/cpu.cpp	/^Point coord_map(Bounds bounds, Coord size, Coord location) {$/;"	f	language:C++
 CPU_CXXFLAGS	/home/dmitry/work/mandelbrot/cpp/Makefile	/^CPU_CXXFLAGS = $(MAGICK_FLAGS) -O2 -g -std=gnu++17 -lstdc++fs -fopenmp -Wno-unused-result$/;"	m	language:Make
 CPU_CXXFLAGS	/home/dmitry/work/mandelbrot/cuda/Makefile	/^CPU_CXXFLAGS = $(MAGICK_FLAGS) -O2 -g -std=gnu++17 -lstdc++fs -fopenmp -Wno-unused-result$/;"	m	language:Make
 CXX	/home/dmitry/work/mandelbrot/cpp/Makefile	/^CXX = g++$/;"	m	language:Make
 CXX	/home/dmitry/work/mandelbrot/cuda/Makefile	/^CXX = g++$/;"	m	language:Make
-frame_bounds	/home/dmitry/work/mandelbrot/cuda/cpu.cpp	/^Bounds frame_bounds($/;"	f	language:C++
+frame_bounds	/home/dmitry/work/mandelbrot/cpp/Mandelbrot.h	/^Bounds frame_bounds( Bounds bounds, Point center, int frame, Real reduction);$/;"	p	language:C++
 frame_bounds	/home/dmitry/work/mandelbrot/cuda/Mandelbrot.h	/^Bounds frame_bounds( Bounds bounds, Point center, int frame, Real reduction);$/;"	p	language:C++
-generate_image	/home/dmitry/work/mandelbrot/cuda/cpu.cpp	/^void generate_image(Image &image, Bounds bounds, uint32_t threshold) {$/;"	f	language:C++
+generate_image	/home/dmitry/work/mandelbrot/cpp/Mandelbrot.h	/^void generate_image(Image &image, Bounds bounds, uint32_t threshold);$/;"	p	language:C++
 generate_image	/home/dmitry/work/mandelbrot/cuda/Mandelbrot.h	/^void generate_image(Image &image, Bounds bounds, uint32_t threshold);$/;"	p	language:C++
 GPU_CXXFLAGS	/home/dmitry/work/mandelbrot/cuda/Makefile	/^GPU_CXXFLAGS = $(MAGICK_FLAGS_NO_OMP) -O2 -g -std=c++14 --expt-relaxed-constexpr$/;"	m	language:Make
+img_height	/home/dmitry/work/mandelbrot/cpp/Mandelbrot.h	/^const uint32_t img_height = 256;$/;"	v	language:C++
 img_height	/home/dmitry/work/mandelbrot/cuda/Mandelbrot.h	/^const uint32_t img_height = 480;$/;"	v	language:C++
+img_width	/home/dmitry/work/mandelbrot/cpp/Mandelbrot.h	/^const uint32_t img_width = 256;$/;"	v	language:C++
 img_width	/home/dmitry/work/mandelbrot/cuda/Mandelbrot.h	/^const uint32_t img_width = 640;$/;"	v	language:C++
-iterations	/home/dmitry/work/mandelbrot/cuda/cpu.cpp	/^int32_t iterations(Point coords, uint32_t threshold) {$/;"	f	language:C++
 MAGICK_FLAGS	/home/dmitry/work/mandelbrot/cpp/Makefile	/^MAGICK_FLAGS = `Magick++-config --cxxflags --libs`$/;"	m	language:Make
 MAGICK_FLAGS	/home/dmitry/work/mandelbrot/cuda/Makefile	/^MAGICK_FLAGS = `Magick++-config --cxxflags --libs`$/;"	m	language:Make
 MAGICK_FLAGS_NO_OMP	/home/dmitry/work/mandelbrot/cuda/Makefile	/^MAGICK_FLAGS_NO_OMP = `Magick++-config --cxxflags --libs | xargs -d' ' -n 1 | grep -v "openmp"`$/;"	m	language:Make
+main	/home/dmitry/work/mandelbrot/cpp/Mandelbrot.cpp	/^int main(int argc, char **argv) {$/;"	f	language:C++
 main	/home/dmitry/work/mandelbrot/cuda/Mandelbrot.cpp	/^int main(int argc, char **argv) {$/;"	f	language:C++
 NVCC	/home/dmitry/work/mandelbrot/cuda/Makefile	/^NVCC = nvcc$/;"	m	language:Make
+threshold	/home/dmitry/work/mandelbrot/cpp/Mandelbrot.h	/^const uint32_t threshold = 500;$/;"	v	language:C++
 threshold	/home/dmitry/work/mandelbrot/cuda/Mandelbrot.h	/^const uint32_t threshold = 25;$/;"	v	language:C++
+threshold_increase	/home/dmitry/work/mandelbrot/cpp/Mandelbrot.h	/^const Real threshold_increase = 1.00;$/;"	v	language:C++
 threshold_increase	/home/dmitry/work/mandelbrot/cuda/Mandelbrot.h	/^const Real threshold_increase = 1.05;$/;"	v	language:C++

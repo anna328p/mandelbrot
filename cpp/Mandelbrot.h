@@ -35,11 +35,11 @@ using Point = std::complex<Real>;
 using Bounds = std::pair<Point, Point>;
 using Coord = std::pair<uint32_t, uint32_t>;
 
-const uint32_t img_width = 640;
-const uint32_t img_height = 480;
+const uint32_t img_width = 256;
+const uint32_t img_height = 256;
 
-const uint32_t threshold = 25;
-const Real threshold_increase = 1.05;
+const uint32_t threshold = 500;
+const Real threshold_increase = 1.00;
 
 
 void generate_image(Image &image, Bounds bounds, uint32_t threshold);

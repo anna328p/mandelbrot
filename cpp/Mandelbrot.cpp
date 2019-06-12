@@ -32,23 +32,23 @@ int main(int argc, char **argv) {
 
 	std::vector<Image> frames;
 
-#pragma omp parallel for ordered shared(frames) schedule(dynamic, 4)
+#pragma omp parallel for ordered shared(frames) schedule(dynamic, 1)
 	for (auto i = first_frame; i <= last_frame; i++) {
 		printf("Starting generation of frame %d...\n", i);
 
 		int my_threshold = threshold * std::pow(threshold_increase, i);
 		auto bounds = frame_bounds(
-				Bounds(Point(-2, 1.1), Point(1, -1.1)),
-				Point(x, y), i, 0.1);
+				Bounds(Point(-1, 1.1), Point(1, -1.1)),
+				Point(x, y), i, 0.05);
 
-		auto image = Image("640x480", Color(MaxRGB, MaxRGB, MaxRGB, 0));
+		auto image = Image("256x256", Color(MaxRGB, MaxRGB, MaxRGB, 0));
 
 		generate_image(image, bounds, my_threshold);
 
 		image.magick("png");
 		image.animationDelay(5);
 		image.gaussianBlur(1, 1);
-		image.scale(Geometry("320x240"));
+		image.scale(Geometry("128x128"));
 
 		printf("Generated frame %d\n", i);
 
