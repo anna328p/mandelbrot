@@ -1,14 +1,16 @@
-CXX = g++
-MAGICK_FLAGS = `Magick++-config --cxxflags --libs`
-CPU_CXXFLAGS = $(MAGICK_FLAGS) -O2 -g -std=gnu++17 -lstdc++fs -fopenmp -Wno-unused-result
-
-cpu: Mandelbrot.h cpu.cpp
-	$(CXX) $(CPU_CXXFLAGS) -c -o cpu.o cpu.cpp
-
-mandelbrot: Mandelbrot.h Mandelbrot.cpp
-	$(CXX) $(CPU_CXXFLAGS) -c -o Mandelbrot.o Mandelbrot.cpp
-
-md-cpu: cpu mandelbrot
-	$(CXX) $(CPU_CXXFLAGS) -o md-cpu Mandelbrot.o cpu.o
+CXX := g++
+MAGICK_FLAGS := $(shell Magick++-config --cxxflags)
+MAGICK_LIBS := $(shell Magick++-config --libs)
+CXXFLAGS := $(MAGICK_FLAGS) -O4 -std=gnu++17 -lstdc++fs -fopenmp -Wno-unused-result -flto -fno-fat-lto-objects
+LDFLAGS := $(MAGICK_LIBS) -O4 -std=gnu++17 -lstdc++fs -fopenmp -Wno-unused-result -flto -fno-fat-lto-objects -fwhole-program
 
 all: md-cpu
+
+.cpp.o:
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+md-cpu: cpu.o Mandelbrot.o
+	$(CXX) $(LDFLAGS) -o md-cpu Mandelbrot.o cpu.o
+
+clean:
+	rm cpu.o Mandelbrot.o md-cpu
