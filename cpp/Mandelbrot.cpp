@@ -28,40 +28,56 @@ int main(int argc, char **argv) {
 
 	std::vector<std::string> filenames;
 
-	if (!fs::is_directory("frames")) fs::create_directories("frames");
+	// Create folder for frames
+	char *folder_name;
+	asprintf(&folder_name, "frames_%d", job_number);
+	if (!fs::is_directory(folder_name)) fs::create_directories(folder_name);
 
+	// Generate the frames
 	std::vector<Image> frames;
 
 #pragma omp parallel for ordered shared(frames) schedule(dynamic, 1)
-	for (auto i = first_frame; i <= last_frame; i++) {
-		printf("Starting generation of frame %d...\n", i);
+	for (auto f = first_frame; f <= last_frame; f++) {
+		printf("Starting generation of frame %d...\n", f);
 
-		int my_threshold = threshold * std::pow(threshold_increase, i);
+		// Find boundaries of frame
+		int my_threshold = threshold * std::pow(threshold_increase, f);
 		auto bounds = frame_bounds(
 				Bounds(Point(-1, 1.1), Point(1, -1.1)),
-				Point(x, y), i, 0.05);
+				Point(x, y), f, 0.1);
 
-		auto image = Image("256x256", Color(MaxRGB, MaxRGB, MaxRGB, 0));
+		// Create canvas for frame
+		auto image = Image("2048x2048", Color(MaxRGB, MaxRGB, MaxRGB, 0));
 
+		// Perform the actual generation
 		generate_image(image, bounds, my_threshold);
 
+		// Convert and resize image
 		image.magick("png");
-		image.animationDelay(5);
+		image.animationDelay(10);
 		image.gaussianBlur(1, 1);
-		image.scale(Geometry("128x128"));
+		image.scale(Geometry("512x512"));
 
-		printf("Generated frame %d\n", i);
+		printf("Generated frame %d\n", f);
+
+		// Save image
+
+		char* format;
+		asprintf(&format, "%s/output_%%0%dd.png", folder_name, (int) ceil(log10(last_frame)));
 
 		char* filename;
-		asprintf(&filename, "frames/output_%d.png", i);
+		asprintf(&filename, format, f);
+
 		image.write(filename);
 
+		// Add image to list
 #pragma omp ordered
 		frames.push_back(image);
 
-		printf("Saved frame %d\n", i);
+		printf("Saved frame %d\n", f);
 	}
 
+	// Stitch frames into animation
 	printf("Stitching animation...\n");
 
 	char* filename;

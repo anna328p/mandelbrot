@@ -17,16 +17,19 @@
  */
 #include "Mandelbrot.h"
 
+// Calculate the number of iterations needed for a point to begin to approach
+// infinity, up to a given threshold.
 int32_t iterations(Point coords, uint32_t threshold) {
 	auto z = Point(0, 0);
 
-	for (int i = 0; i < threshold; i++) {
+	for (uint32_t i = 0; i < threshold; i++) {
 		z = z*z + coords;
 		if (std::abs(z) > 2.0) return i;
 	}
 	return -1;
 }
 
+// Map a set of pixel coordinates to a point in the given bounds.
 Point coord_map(Bounds bounds, Coord size, Coord location) {
 	Real x1 = bounds.first.real();
 	Real y1 = bounds.first.imag();
@@ -42,6 +45,7 @@ Point coord_map(Bounds bounds, Coord size, Coord location) {
 	return Point(x_coord, y_coord);
 }
 
+// Calculate the bounds needed for a certain frame in the zoomed image.
 Bounds frame_bounds(
 		Bounds bounds, Point center,
 		int frame, Real reduction
@@ -56,22 +60,33 @@ Bounds frame_bounds(
 	return Bounds(Point(x1, y1), Point(x2, y2));
 }
 
+// Render an image of the Mandelbrot set into the given canvas,
+// using the given bounds and threshold.
 void generate_image(Image &image, Bounds bounds, uint32_t threshold) {
 	auto width = image.columns();
 	auto height = image.rows();
 
+	// Lock image for pixel modification
 	image.modifyImage();
 
+	// Retrieve the raw pixel data
 	Pixels pixel_cache(image);
 	auto pixels = pixel_cache.get(0, 0, width, height);
 
+	// Define color information
 	Color black(0, 0, 0, 0);
 	auto color_scale = ((Real) QuantumRange / threshold);
 
-	for (auto y = 0; y < height; y++) {
-		for (auto x = 0; x < width; x++) {
+	// Iterate over every pixel in the image
+	for (size_t y = 0; y < height; y++) {
+		for (size_t x = 0; x < width; x++) {
+			// Identify the coordinates for this point
 			Point coords = coord_map(bounds, Coord(width, height), Coord(x, y));
+
+			// Find the number of iterations needed for this point
 			auto depth = iterations(coords, threshold);
+
+			// Set the pixel's color based on this value
 			if (depth == -1) {
 				*(pixels + width * y + x) = black;
 			} else {
@@ -84,5 +99,6 @@ void generate_image(Image &image, Bounds bounds, uint32_t threshold) {
 		}
 	}
 
+	// Save the raw pixel data
 	pixel_cache.sync();
 }

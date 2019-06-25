@@ -16,6 +16,8 @@
  * =====================================================================================
  */
 
+// Includes
+
 #include <vector>
 #include <complex>
 #include <cstdint>
@@ -29,18 +31,23 @@
 
 using namespace Magick;
 
+// Type definitions
+
 using Real = long double;
 
 using Point = std::complex<Real>;
 using Bounds = std::pair<Point, Point>;
 using Coord = std::pair<uint32_t, uint32_t>;
 
+// Configuration
+
 const uint32_t img_width = 256;
 const uint32_t img_height = 256;
 
-const uint32_t threshold = 500;
-const Real threshold_increase = 1.00;
+const uint32_t threshold = 100;
+const Real threshold_increase = 1.05;
 
+// Function declarations
 
 void generate_image(Image &image, Bounds bounds, uint32_t threshold);
 

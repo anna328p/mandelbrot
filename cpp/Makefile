@@ -1,8 +1,9 @@
 CXX := g++
 MAGICK_FLAGS := $(shell Magick++-config --cxxflags)
 MAGICK_LIBS := $(shell Magick++-config --libs)
-CXXFLAGS := $(MAGICK_FLAGS) -O4 -std=gnu++17 -lstdc++fs -fopenmp -Wno-unused-result -flto -fno-fat-lto-objects
-LDFLAGS := $(MAGICK_LIBS) -O4 -std=gnu++17 -lstdc++fs -fopenmp -Wno-unused-result -flto -fno-fat-lto-objects -fwhole-program
+OPTIMIZATIONS = -O4 -flto -fno-fat-lto-objects -march=native -Ofast
+CXXFLAGS := $(MAGICK_FLAGS) $(OPTIMIZATIONS) -std=gnu++17 -lstdc++fs -fopenmp -Wno-unused-result -Wall -Wextra -pedantic
+LDFLAGS := $(MAGICK_LIBS) $(OPTIMIZATIONS) -std=gnu++17 -lstdc++fs -fopenmp -Wno-unused-result -Wall -Wextra -pedantic
 
 all: md-cpu
 
