@@ -41,11 +41,14 @@ using Coord = std::pair<uint32_t, uint32_t>;
 
 // Configuration
 
-const uint32_t img_width = 256;
-const uint32_t img_height = 256;
+constexpr const char *const original_dimensions = "2048x2048";
+constexpr const char *const final_dimensions = "512x512";
 
-const uint32_t threshold = 100;
-const Real threshold_increase = 1.05;
+constexpr uint32_t threshold = 100;
+constexpr uint32_t delay = 5;
+constexpr uint32_t frame_rate = (int) (100 / delay);
+constexpr Real threshold_increase = 1.025;
+constexpr Real zoom_factor = 0.05;
 
 // Function declarations
 

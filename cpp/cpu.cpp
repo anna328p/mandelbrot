@@ -77,15 +77,25 @@ void generate_image(Image &image, Bounds bounds, uint32_t threshold) {
 	Color black(0, 0, 0, 0);
 	auto color_scale = ((Real) QuantumRange / threshold);
 
-	// Iterate over every pixel in the image
+	std::vector<int> thresholds(width * height);
+
+#pragma omp simd
 	for (size_t y = 0; y < height; y++) {
 		for (size_t x = 0; x < width; x++) {
 			// Identify the coordinates for this point
 			Point coords = coord_map(bounds, Coord(width, height), Coord(x, y));
 
 			// Find the number of iterations needed for this point
-			auto depth = iterations(coords, threshold);
+			thresholds[width * y + x] = iterations(coords, threshold);
+		}
+	}
 
+
+	// Iterate over every pixel in the image
+#pragma omp parallel for
+	for (size_t y = 0; y < height; y++) {
+		for (size_t x = 0; x < width; x++) {
+			int depth = thresholds[width * y + x];
 			// Set the pixel's color based on this value
 			if (depth == -1) {
 				*(pixels + width * y + x) = black;

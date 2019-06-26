@@ -14,4 +14,4 @@ md-cpu: cpu.o Mandelbrot.o
 	$(CXX) $(LDFLAGS) -o md-cpu Mandelbrot.o cpu.o
 
 clean:
-	rm cpu.o Mandelbrot.o md-cpu
+	rm -f cpu.o Mandelbrot.o md-cpu
