@@ -17,6 +17,8 @@
  */
 #include "Mandelbrot.h"
 
+using Magick::Quantum;
+
 // Calculate the number of iterations needed for a point to begin to approach
 // infinity, up to a given threshold.
 int32_t iterations(Point coords, uint32_t threshold) {
@@ -48,10 +50,12 @@ Point coord_map(Bounds bounds, Coord size, Coord location) {
 // Calculate the bounds needed for a certain frame in the zoomed image.
 Bounds frame_bounds(
 		Bounds bounds, Point center,
-		int frame, Real reduction
+		int frame, Real zoom_factor
 		) {
-	Real width  = (bounds.second.real() - bounds.first.real()) * pow((1 - reduction), frame);
-	Real height = (bounds.second.imag() - bounds.first.imag()) * pow((1 - reduction), frame);
+	Real width  = (bounds.second.real() - bounds.first.real())
+		* pow(zoom_factor, frame);
+	Real height = (bounds.second.imag() - bounds.first.imag())
+		* pow(zoom_factor, frame);
 
 	Real x1 = center.real() - (width / 2);
 	Real x2 = center.real() + (width / 2);
@@ -62,7 +66,7 @@ Bounds frame_bounds(
 
 // Render an image of the Mandelbrot set into the given canvas,
 // using the given bounds and threshold.
-void generate_image(Image &image, Bounds bounds, uint32_t threshold) {
+void generate_image(Magick::Image &image, Bounds bounds, uint32_t threshold) {
 	auto width = image.columns();
 	auto height = image.rows();
 
@@ -70,12 +74,16 @@ void generate_image(Image &image, Bounds bounds, uint32_t threshold) {
 	image.modifyImage();
 
 	// Retrieve the raw pixel data
-	Pixels pixel_cache(image);
+	Magick::Pixels pixel_cache(image);
 	auto pixels = pixel_cache.get(0, 0, width, height);
 
 	// Define color information
-	Color black(0, 0, 0, 0);
-	auto color_scale = ((Real) QuantumRange / threshold);
+	Magick::Color black(0, 0, 0, 0);
+	auto color_scale = ((Real) MaxRGB / threshold);
+
+	auto max_red = color_scale;
+	auto max_green = color_scale / 2;
+	auto max_blue = color_scale / 2;
 
 	std::vector<int> thresholds(width * height);
 
@@ -100,10 +108,10 @@ void generate_image(Image &image, Bounds bounds, uint32_t threshold) {
 			if (depth == -1) {
 				*(pixels + width * y + x) = black;
 			} else {
-				*(pixels + width * y + x) = Color(
-						color_scale * depth,
-						color_scale * depth / 2.0,
-						QuantumRange - color_scale * depth
+				*(pixels + width * y + x) = Magick::Color(
+						max_red * depth,
+						max_green * depth / 2.0,
+						MaxRGB - max_blue * depth
 						);
 			}
 		}

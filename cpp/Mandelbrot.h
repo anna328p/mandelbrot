@@ -5,13 +5,7 @@
  *
  *    Description:  Header file for Mandelbrot
  *
- *        Version:  1.0
  *        Created:  06/11/2019 09:40:52 PM
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  YOUR NAME (), 
- *   Organization:  
  *
  * =====================================================================================
  */
@@ -29,11 +23,9 @@
 
 #include <omp.h>
 
-using namespace Magick;
-
 // Type definitions
 
-using Real = long double;
+using Real = double;
 
 using Point = std::complex<Real>;
 using Bounds = std::pair<Point, Point>;
@@ -41,17 +33,42 @@ using Coord = std::pair<uint32_t, uint32_t>;
 
 // Configuration
 
-constexpr const char *const original_dimensions = "2048x2048";
-constexpr const char *const final_dimensions = "512x512";
+enum OutputType { gif, mp4 };
+struct Options {
+	int32_t first_frame;
+	int32_t last_frame;
+	uint32_t job_number;
 
-constexpr uint32_t threshold = 100;
-constexpr uint32_t delay = 5;
-constexpr uint32_t frame_rate = (int) (100 / delay);
-constexpr Real threshold_increase = 1.025;
-constexpr Real zoom_factor = 0.05;
+	bool position_is_random;
+	Point center_point;
+
+	std::pair<Point,Point> starting_view;
+	Real zoom_factor;
+
+	Real threshold;
+	Real threshold_increase;
+
+	std::string original_dimensions;
+	std::string final_dimensions;
+
+	uint32_t fps;
+
+	std::string output_dir;
+	std::string output_filename;
+	OutputType output_type;
+};
+
+constexpr const char *const original_dimensions = "512x512";
+constexpr const char *const final_dimensions = "128x128";
+
+constexpr const uint32_t threshold = 100;
+constexpr const uint32_t delay = 5;
+constexpr const uint32_t fps = (int) (100 / delay);
+constexpr const Real threshold_increase = 1.025;
+constexpr const Real zoom_factor = 0.95;
 
 // Function declarations
 
-void generate_image(Image &image, Bounds bounds, uint32_t threshold);
+void generate_image(Magick::Image &image, Bounds bounds, uint32_t threshold);
 
 Bounds frame_bounds( Bounds bounds, Point center, int frame, Real reduction);

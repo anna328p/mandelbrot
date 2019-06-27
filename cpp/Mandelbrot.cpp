@@ -9,11 +9,24 @@
 
 #include <unistd.h>
 
+#include <boost/program_options.hpp>
+#include <boost/process.hpp>
+
+#include <Magick++.h>
+
 namespace fs = std::filesystem;
+namespace po = boost::program_options;
+namespace bp = boost::process;
+
+using Magick::Quantum;
 
 #include "Mandelbrot.h"
 
+
 int main(int argc, char **argv) {
+	Options options;
+
+
 	// Get parameters of job
 	auto first_frame = std::stoi(argv[1]);
 	auto last_frame = std::stoi(argv[2]);
@@ -40,10 +53,11 @@ int main(int argc, char **argv) {
 	if (!fs::is_directory(folder_name)) fs::create_directories(folder_name);
 
 	char* frame_name_format;
-	asprintf(&frame_name_format, "%s/output_%%0%dd.png", folder_name, (int) ceil(log10(last_frame)));
+	asprintf(&frame_name_format, "%s/output_%%0%dd.png",
+			folder_name, (int) ceil(log10(last_frame)));
 
 	// Generate the frames
-	std::vector<Image> frames;
+	std::vector<Magick::Image> frames;
 
 #pragma omp parallel for ordered shared(frames) schedule(dynamic, 1)
 	for (auto f = first_frame; f <= last_frame; f++) {
@@ -56,7 +70,8 @@ int main(int argc, char **argv) {
 				Point(x, y), f, zoom_factor);
 
 		// Create canvas for frame
-		auto image = Image("2048x2048", Color(MaxRGB, MaxRGB, MaxRGB, 0));
+		auto image = Magick::Image("2048x2048",
+				Magick::Color(MaxRGB, MaxRGB, MaxRGB, 0));
 
 		// Perform the actual generation
 		generate_image(image, bounds, my_threshold);
@@ -65,7 +80,7 @@ int main(int argc, char **argv) {
 		image.magick("png");
 		image.animationDelay(delay);
 		image.gaussianBlur(1, 1);
-		image.scale(Geometry(final_dimensions));
+		image.scale(Magick::Geometry(final_dimensions));
 
 		printf("Generated frame %d\n", f);
 
@@ -91,14 +106,16 @@ int main(int argc, char **argv) {
 	auto bad_itoa = [] (auto s) { return strdup(s.c_str()); };
 	auto str_first_frame = bad_itoa(std::to_string(first_frame));
 	auto str_nr_frames = bad_itoa(std::to_string(last_frame - first_frame));
+	auto str_fps = bad_itoa(std::to_string(fps));
 
 	//writeImages(frames.begin(), frames.end(), filename);
 	char *const ffmpeg_args[] = {
 				"ffmpeg",
-				"-r", "20",
+				"-r", str_fps,
 				"-f", "image2",
 				"-s", strdup(final_dimensions),
 				"-i", strdup(frame_name_format),
+				"-pix_fmt", "rgb24",
 				"-start_number", str_first_frame,
 				"-vframes", str_nr_frames,
 				"-c:v", "libx264rgb",

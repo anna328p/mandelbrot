@@ -7,13 +7,14 @@ gcc9Stdenv.mkDerivation {
     imagemagick
     pkgconfig
     gitAndTools.hub gnumake
+    meson ninja
     boost
     glib gnome3.glade gtkmm3
   ];
 
-  configurePhase = "make clean";
+ # configurePhase = "meson build";
 
-  buildPhase = "make";
+  # buildPhase = "ninja -C build";
 
   installPhase = ''
 	mkdir -p $out/bin
