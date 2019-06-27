@@ -1,0 +1,99 @@
+Build started at 2019-06-27T13:16:43.500537
+Main binary: /nix/store/4w1rxv6wfkv728jzmm6pqq3jsqd4yvi7-python3-3.7.3/bin/python3.7
+Python system: Linux
+The Meson build system
+Version: 0.49.2
+Source dir: /home/dmitry/work/mandelbrot/cpp
+Build dir: /home/dmitry/work/mandelbrot/cpp/reconfigure
+Build type: native build
+Project name: mandelbrot
+Project version: a0.01
+Sanity testing C++ compiler: g++
+Is cross compiler: False.
+Sanity check compiler command line: g++ /home/dmitry/work/mandelbrot/cpp/reconfigure/meson-private/sanitycheckcpp.cc -o /home/dmitry/work/mandelbrot/cpp/reconfigure/meson-private/sanitycheckcpp.exe
+Sanity check compile stdout:
+
+-----
+Sanity check compile stderr:
+
+-----
+Running test binary command: /home/dmitry/work/mandelbrot/cpp/reconfigure/meson-private/sanitycheckcpp.exe
+Native C++ compiler: g++ (gcc 9.1.0 "g++ (GCC) 9.1.0")
+Build machine cpu family: x86_64
+Build machine cpu: x86_64
+Found pkg-config: /nix/store/bvmnh4l0fqccp1f2ym1csf7269mf9bl6-pkg-config-0.29.2/bin/pkg-config (0.29.2)
+Determining dependency 'Magick++' with pkg-config executable '/nix/store/bvmnh4l0fqccp1f2ym1csf7269mf9bl6-pkg-config-0.29.2/bin/pkg-config'
+Called `/nix/store/bvmnh4l0fqccp1f2ym1csf7269mf9bl6-pkg-config-0.29.2/bin/pkg-config --modversion Magick++` -> 0
+6.9.9
+Called `/nix/store/bvmnh4l0fqccp1f2ym1csf7269mf9bl6-pkg-config-0.29.2/bin/pkg-config --cflags Magick++` -> 0
+-fopenmp -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16 -fopenmp -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16 -fopenmp -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16 -I/nix/store/rxac38y1lj19gl089zhvbvs4kdj3j2gz-imagemagick-6.9.9-34-dev/include/ImageMagick-6
+Called `/nix/store/bvmnh4l0fqccp1f2ym1csf7269mf9bl6-pkg-config-0.29.2/bin/pkg-config Magick++ --libs` -> 0
+-L/nix/store/l4wkd86gimrl97nn2wwh937v9r4fm0n1-imagemagick-6.9.9-34/lib -lMagick++-6.Q16 -lMagickWand-6.Q16 -lMagickCore-6.Q16
+Called `/nix/store/bvmnh4l0fqccp1f2ym1csf7269mf9bl6-pkg-config-0.29.2/bin/pkg-config Magick++ --libs` -> 0
+-L/nix/store/l4wkd86gimrl97nn2wwh937v9r4fm0n1-imagemagick-6.9.9-34/lib -lMagick++-6.Q16 -lMagickWand-6.Q16 -lMagickCore-6.Q16
+Running compile:
+Working directory:  /run/user/1000/tmpssm22r2k
+Command line:  g++ /run/user/1000/tmpssm22r2k/testfile.cpp -pipe -D_FILE_OFFSET_BITS=64 -o /run/user/1000/tmpssm22r2k/output.exe -O0 -fpermissive 
+
+Code:
+ #include<stdio.h>
+        
+        int main(int argc, char **argv) {
+            printf("%ld\n", (long)(sizeof(void *)));
+            return 0;
+        };
+Compiler stdout:
+ 
+Compiler stderr:
+ In file included from /nix/store/637r9rfg768z29sqa9ppajjnkskszrja-glibc-2.27-dev/include/bits/libc-header-start.h:33,
+                 from /nix/store/637r9rfg768z29sqa9ppajjnkskszrja-glibc-2.27-dev/include/stdio.h:27,
+                 from /run/user/1000/tmpssm22r2k/testfile.cpp:1:
+/nix/store/637r9rfg768z29sqa9ppajjnkskszrja-glibc-2.27-dev/include/features.h:381:4: warning: #warning _FORTIFY_SOURCE requires compiling with optimization (-O) [-Wcpp]
+  381 | #  warning _FORTIFY_SOURCE requires compiling with optimization (-O)
+      |    ^~~~~~~
+
+Program stdout:
+
+8
+
+Program stderr:
+
+
+Running compile:
+Working directory:  /run/user/1000/tmpfpgtecb_
+Command line:  g++ /run/user/1000/tmpfpgtecb_/testfile.cpp -pipe -D_FILE_OFFSET_BITS=64 -c -o /run/user/1000/tmpfpgtecb_/output.obj -O0 -fpermissive --print-search-dirs 
+
+Code:
+ 
+Compiler stdout:
+ install: /nix/store/s40zkcmiqk02qq7hrazb8vrjmpkg17xy-gcc-9.1.0/lib/gcc/x86_64-unknown-linux-gnu/9.1.0/
+programs: =/nix/store/znrykq4x14zzd27s6v5ln1c5bmgsyyr8-gcc-9.1.0-lib/lib/x86_64-unknown-linux-gnu/9.1.0/:/nix/store/znrykq4x14zzd27s6v5ln1c5bmgsyyr8-gcc-9.1.0-lib/lib/:/nix/store/db2fz1d8hka8xcyw4755ks081ljxwgac-glibc-2.27/lib/x86_64-unknown-linux-gnu/9.1.0/:/nix/store/db2fz1d8hka8xcyw4755ks081ljxwgac-glibc-2.27/lib/:/nix/store/j8309llclpflffmxrcj3jrryzssnkfsy-gcc-wrapper-9.1.0/bin/x86_64-unknown-linux-gnu/9.1.0/:/nix/store/j8309llclpflffmxrcj3jrryzssnkfsy-gcc-wrapper-9.1.0/bin/:/nix/store/s40zkcmiqk02qq7hrazb8vrjmpkg17xy-gcc-9.1.0/libexec/gcc/x86_64-unknown-linux-gnu/9.1.0/:/nix/store/s40zkcmiqk02qq7hrazb8vrjmpkg17xy-gcc-9.1.0/libexec/gcc/x86_64-unknown-linux-gnu/9.1.0/:/nix/store/s40zkcmiqk02qq7hrazb8vrjmpkg17xy-gcc-9.1.0/libexec/gcc/x86_64-unknown-linux-gnu/:/nix/store/s40zkcmiqk02qq7hrazb8vrjmpkg17xy-gcc-9.1.0/lib/gcc/x86_64-unknown-linux-gnu/9.1.0/:/nix/store/s40zkcmiqk02qq7hrazb8vrjmpkg17xy-gcc-9.1.0/lib/gcc/x86_64-unknown-linux-gnu/:/nix/store/s40zkcmiqk02qq7hrazb8vrjmpkg17xy-gcc-9.1.0/lib/gcc/x86_64-unknown-linux-gnu/9.1.0/../../../../x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu/9.1.0/:/nix/store/s40zkcmiqk02qq7hrazb8vrjmpkg17xy-gcc-9.1.0/lib/gcc/x86_64-unknown-linux-gnu/9.1.0/../../../../x86_64-unknown-linux-gnu/bin/
+libraries: =/nix/store/znrykq4x14zzd27s6v5ln1c5bmgsyyr8-gcc-9.1.0-lib/lib/x86_64-unknown-linux-gnu/9.1.0/:/nix/store/znrykq4x14zzd27s6v5ln1c5bmgsyyr8-gcc-9.1.0-lib/lib/:/nix/store/db2fz1d8hka8xcyw4755ks081ljxwgac-glibc-2.27/lib/x86_64-unknown-linux-gnu/9.1.0/:/nix/store/db2fz1d8hka8xcyw4755ks081ljxwgac-glibc-2.27/lib/:/nix/store/j8309llclpflffmxrcj3jrryzssnkfsy-gcc-wrapper-9.1.0/bin/x86_64-unknown-linux-gnu/9.1.0/:/nix/store/j8309llclpflffmxrcj3jrryzssnkfsy-gcc-wrapper-9.1.0/bin/:/nix/store/s40zkcmiqk02qq7hrazb8vrjmpkg17xy-gcc-9.1.0/lib/gcc/x86_64-unknown-linux-gnu/9.1.0/:/nix/store/s40zkcmiqk02qq7hrazb8vrjmpkg17xy-gcc-9.1.0/lib/gcc/x86_64-unknown-linux-gnu/9.1.0/../../../../x86_64-unknown-linux-gnu/lib/x86_64-unknown-linux-gnu/9.1.0/:/nix/store/s40zkcmiqk02qq7hrazb8vrjmpkg17xy-gcc-9.1.0/lib/gcc/x86_64-unknown-linux-gnu/9.1.0/../../../../x86_64-unknown-linux-gnu/lib/../lib64/:/nix/store/s40zkcmiqk02qq7hrazb8vrjmpkg17xy-gcc-9.1.0/lib/gcc/x86_64-unknown-linux-gnu/9.1.0/../../../x86_64-unknown-linux-gnu/9.1.0/:/nix/store/s40zkcmiqk02qq7hrazb8vrjmpkg17xy-gcc-9.1.0/lib/gcc/x86_64-unknown-linux-gnu/9.1.0/../../../../lib64/:/nix/store/s40zkcmiqk02qq7hrazb8vrjmpkg17xy-gcc-9.1.0/lib/gcc/x86_64-unknown-linux-gnu/9.1.0/../../../../x86_64-unknown-linux-gnu/lib/:/nix/store/s40zkcmiqk02qq7hrazb8vrjmpkg17xy-gcc-9.1.0/lib/gcc/x86_64-unknown-linux-gnu/9.1.0/../../../
+
+Compiler stderr:
+ 
+Dependency magick++ found: YES 6.9.9
+Boost library root dir is None
+Boost include directory is None
+Running compile:
+Working directory:  /run/user/1000/tmpn30yyjqm
+Command line:  g++ /run/user/1000/tmpn30yyjqm/testfile.cpp -pipe -D_FILE_OFFSET_BITS=64 -E -P -O0 -fpermissive 
+
+Code:
+ 
+        #include <boost/version.hpp>
+        #ifndef BOOST_LIB_VERSION
+        # define BOOST_LIB_VERSION
+        #endif
+        "MESON_GET_DEFINE_DELIMITER"
+BOOST_LIB_VERSION
+Compiler stdout:
+         "MESON_GET_DEFINE_DELIMITER"
+"1_67"
+
+Compiler stderr:
+ 
+Boost library directory is None
+Dependency Boost found: YES 1.67
+Build targets in project: 1
+Found ninja-1.9.0 at /nix/store/m2dvfc7a7pf9kp3ygyyppr6hpwr854rq-ninja-1.9.0/bin/ninja

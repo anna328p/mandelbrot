@@ -1,0 +1,14 @@
+[
+  {
+    "directory": "/home/dmitry/work/mandelbrot/cpp/reconfigure",
+    "command": "g++ -Imd-cpu@exe -I. -I.. -I/nix/store/rxac38y1lj19gl089zhvbvs4kdj3j2gz-imagemagick-6.9.9-34-dev/include/ImageMagick-6 -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wnon-virtual-dtor -g -fopenmp -fopenmp -fopenmp -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16  -MD -MQ 'md-cpu@exe/Mandelbrot.cpp.o' -MF 'md-cpu@exe/Mandelbrot.cpp.o.d' -o 'md-cpu@exe/Mandelbrot.cpp.o' -c ../Mandelbrot.cpp",
+    "file": "../Mandelbrot.cpp",
+    "output": "md-cpu@exe/Mandelbrot.cpp.o"
+  },
+  {
+    "directory": "/home/dmitry/work/mandelbrot/cpp/reconfigure",
+    "command": "g++ -Imd-cpu@exe -I. -I.. -I/nix/store/rxac38y1lj19gl089zhvbvs4kdj3j2gz-imagemagick-6.9.9-34-dev/include/ImageMagick-6 -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wnon-virtual-dtor -g -fopenmp -fopenmp -fopenmp -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16  -MD -MQ 'md-cpu@exe/cpu.cpp.o' -MF 'md-cpu@exe/cpu.cpp.o.d' -o 'md-cpu@exe/cpu.cpp.o' -c ../cpu.cpp",
+    "file": "../cpu.cpp",
+    "output": "md-cpu@exe/cpu.cpp.o"
+  }
+]
