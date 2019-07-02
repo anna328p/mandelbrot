@@ -8,3 +8,8 @@ cuda/cpu
 cuda/a.out
 cuda/tags
 cuda/test_kernel
+
+cpp/output*.mp4
+cpp/output*.gif
+cpp/frames*
+cpp/frames*/*.png

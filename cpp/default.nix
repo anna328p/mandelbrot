@@ -12,10 +12,6 @@ gcc9Stdenv.mkDerivation {
     glib gnome3.glade gtkmm3
   ];
 
- # configurePhase = "meson build";
-
-  # buildPhase = "ninja -C build";
-
   installPhase = ''
 	mkdir -p $out/bin
 	cp md-cpu $out/bin
